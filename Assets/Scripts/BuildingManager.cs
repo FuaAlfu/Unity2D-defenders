@@ -11,8 +11,10 @@ public class BuildingManager : MonoBehaviour
     // [SerializeField]
     // private Transform mouseVisualTransform; //for testing
 
+    //[SerializeField]
+    //private Transform pfWoodHarveser;
     [SerializeField]
-    private Transform pfWoodHarveser;
+    private BuldingTypeSO buldingType; //we could use list told multiable types  private <BuldingTypeSO> buldingType;
 
     //catch
     private Camera mainCamera;
@@ -32,7 +34,7 @@ public class BuildingManager : MonoBehaviour
        // mouseVisualTransform.position = GetMouseWorldPos(); //for testing
        if(Input.GetMouseButtonDown(0)) //0:left, 1:right, 2:meddile
         {
-            Instantiate(pfWoodHarveser,GetMouseWorldPos(),Quaternion.identity);
+            Instantiate(buldingType.prefabe, GetMouseWorldPos(),Quaternion.identity);
         }
     }
 
