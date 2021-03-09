@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe18d82bf441967468528051768fd49c, type: 3}
-  m_Name: StoneHarvester
+  m_Script: {fileID: 11500000, guid: 2e865f13d083dd74d9bc4ef59ba960bc, type: 3}
+  m_Name: BuildingTypeList
   m_EditorClassIdentifier: 
-  nameString: stone harvester
-  prefabe: {fileID: 3268171481927177482, guid: e1c0174ad0ff4944b9b570c3fefcf804, type: 3}
+  buldingTypeSOs: []
