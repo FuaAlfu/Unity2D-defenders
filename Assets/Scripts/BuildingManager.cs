@@ -22,16 +22,20 @@ public class BuildingManager : MonoBehaviour
     //catch
     private Camera mainCamera;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        //  Debug.LogError("err comes from your big..");
-        mainCamera = Camera.main;
-
         //looking for a folder name
         // Debug.Log(Resources.Load<BuildingTypeListSO>("BuildingTypeList")); //add debug for testing
         buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name); //another way to write it :: must mach with the name of file
         buldingType = buildingTypeList.list[0];
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //here we using instance of camera inside start not inside awake becuase its an external object.
+        //  Debug.LogError("err comes from your big..");
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
