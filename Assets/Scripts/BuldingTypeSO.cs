@@ -10,5 +10,5 @@ public class BuldingTypeSO : ScriptableObject
 {
     public string nameString;
     public Transform prefabe;
-    
+    public ResourceGeneratorData resourceGeneratorData;
 }
