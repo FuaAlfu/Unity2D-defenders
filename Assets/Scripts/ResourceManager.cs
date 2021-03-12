@@ -8,11 +8,31 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    //singleton
+    public static ResourceManager Instance { get; private set; } //using props ..ptv set: nean modifi only here in this type
+
+    /*
+     TODO\
+    ----------------------------
+    another way to type an instance :: old
+     private static ResourceManager instance;
+    public static ResourceManager GetInstance()
+    {
+        return instance;
+    }
+    private static void SetInstance(ResourceManager set)
+    {
+        instance = set;
+    }
+     */
+
     //create a map :: k -> v
     private Dictionary<ResourceTypeSO, int> resourceAmountDictionary;
 
     private void Awake()
     {
+        Instance = this;
+
         resourceAmountDictionary = new Dictionary<ResourceTypeSO, int>();
         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
 
@@ -46,5 +66,6 @@ public class ResourceManager : MonoBehaviour
     public void AddResource(ResourceTypeSO resourceType, int amount)
     {
         resourceAmountDictionary[resourceType] += amount;
+        TestLogResourceAmountDictionary();
     }
 }

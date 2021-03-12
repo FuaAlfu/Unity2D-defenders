@@ -8,12 +8,19 @@ using UnityEngine;
 
 public class ResourceGenerator : MonoBehaviour
 {
+
+    [SerializeField]
+    private ResourceManager resourceManager;
+
     private float timer;
     private float timerMax;
+    private BuldingTypeSO buldingType;
 
     private void Awake()
     {
-        timerMax = 1f;
+        buldingType = GetComponent<BuildingTypeHolder>().buldingType;
+        timerMax = buldingType.resourceGeneratorData.timerMax;
+       // timerMax = 1f;
     }
 
     // Start is called before the first frame update
@@ -29,7 +36,8 @@ public class ResourceGenerator : MonoBehaviour
         if(timer <= 0f)
         {
             timer += timerMax;
-            Debug.Log("time: add"); //one resource every per second
+            Debug.Log("time: add "+ buldingType.resourceGeneratorData.resourceType.nameString); //one resource every per second
+            ResourceManager.Instance.AddResource(buldingType.resourceGeneratorData.resourceType,1);
         }
     }
 }
