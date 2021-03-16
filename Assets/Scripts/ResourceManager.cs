@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class ResourceManager : MonoBehaviour
 {
     //singleton
     public static ResourceManager Instance { get; private set; } //using props ..ptv set: nean modifi only here in this type
+
+    public event EventHandler OnResourceAmountChanged;
 
     /*
      TODO\
@@ -66,6 +69,20 @@ public class ResourceManager : MonoBehaviour
     public void AddResource(ResourceTypeSO resourceType, int amount)
     {
         resourceAmountDictionary[resourceType] += amount;
+
+        //use ?.Invoke to check the field before it, and only going to run when its not null -> has listner
+        /*
+         if(OnResourceAmountChanged != null)
+        {
+            OnResourceAmountChanged(this, EventArgs.Empty);
+        }
+         */
+        OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);  //event handeler signature :: take obj center and an opitinal arg, we use EventArgs.Empty becuase we not want to send any extra info..
         TestLogResourceAmountDictionary();
+    }
+
+    public int GetResourceAmount(ResourceTypeSO resourceType)
+    {
+        return resourceAmountDictionary[resourceType];
     }
 }

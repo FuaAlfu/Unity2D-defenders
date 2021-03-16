@@ -12,10 +12,14 @@ public class ResourceUI : MonoBehaviour
 {
     //[SerializeField]
     //private Transform resourceTemplate;
+     private ResourceTypeListSO resourceTypeList;
+    private Dictionary<ResourceTypeSO, Transform> resourceTypeTransformDictionary;
 
     private void Awake()
     {
-        ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
+        resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
+
+        resourceTypeTransformDictionary = new Dictionary<ResourceTypeSO, Transform>();
 
         Transform resourceTemplate = transform.Find("resourceTemplate");
         resourceTemplate.gameObject.SetActive(false); //to make sure that our temp is hidden
@@ -31,8 +35,7 @@ public class ResourceUI : MonoBehaviour
 
             resourceTransform.Find("image").GetComponent<Image>().sprite = resourceType.sprite;
 
-           // int resourceAmount = ResourceManager.InstanceGetResourceAmount();
-           // resourceTransform.Find("text").GetComponent<TextMeshProUGUI>().SetText();
+            resourceTypeTransformDictionary[resourceType] = resourceTransform;
             index++;
         }
     }
@@ -40,12 +43,26 @@ public class ResourceUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ResourceManager.Instance.OnResourceAmountChanged += ResourceManager_OnResourceAmountChanged;
+        UpdateResourceAmount();
     }
 
-    // Update is called once per frame
-    void Update()
+    //we could use Update() but for time / frame sake, will use events insted.
+    private void ResourceManager_OnResourceAmountChanged(object sender, System.EventArgs e)
     {
-        
+        //throw new System.NotImplementedException();
+        UpdateResourceAmount();
+    }
+
+    private void UpdateResourceAmount()
+    {
+        //accessing resource manager
+        foreach (ResourceTypeSO resourceType in resourceTypeList.list)
+        {
+            Transform resourceTransform = resourceTypeTransformDictionary[resourceType];
+            int resourceAmount = ResourceManager.Instance.GetResourceAmount(resourceType);
+           
+            resourceTransform.Find("text").GetComponent<TextMeshProUGUI>().SetText(resourceAmount.ToString());
+        }
     }
 }
