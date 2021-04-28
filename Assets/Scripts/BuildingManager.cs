@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 2021.3.4
@@ -14,9 +15,10 @@ public class BuildingManager : MonoBehaviour
     //[SerializeField]
     //private Transform pfWoodHarveser;
     //[SerializeField]
-    //private BuldingTypeSO buldingType; //we could use list told multiable types  private <BuldingTypeSO> buldingType;
+    //private BuldingTypeSO activeBuldingType; //we could use list told multiable types  private <BuldingTypeSO> activeBuldingType;
     //---------------------------------------------------------------------------------------------------------------
-    private BuldingTypeSO buldingType;
+    public static BuildingManager Instance { get; private set; }
+    private BuldingTypeSO activeBuldingType;
     private BuildingTypeListSO buildingTypeList;
 
     //catch
@@ -26,8 +28,9 @@ public class BuildingManager : MonoBehaviour
     {
         //looking for a folder name
         // Debug.Log(Resources.Load<BuildingTypeListSO>("BuildingTypeList")); //add debug for testing
+        Instance = this;
         buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name); //another way to write it :: must mach with the name of file
-        buldingType = buildingTypeList.list[0];
+        activeBuldingType = buildingTypeList.list[0];
     }
 
     // Start is called before the first frame update
@@ -44,19 +47,19 @@ public class BuildingManager : MonoBehaviour
         // Debug.Log(Input.mousePosition);
         // Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
        // mouseVisualTransform.position = GetMouseWorldPos(); //for testing
-       if(Input.GetMouseButtonDown(0)) //0:left, 1:right, 2:meddile
+       if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) //0:left, 1:right, 2:meddile
         {
-            Instantiate(buldingType.prefabe, GetMouseWorldPos(),Quaternion.identity);
+            Instantiate(activeBuldingType.prefabe, GetMouseWorldPos(),Quaternion.identity);
         }
-       //for testing
+        //for testing
 
-       if(Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            buldingType = buildingTypeList.list[0];
+            activeBuldingType = buildingTypeList.list[0];
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            buldingType = buildingTypeList.list[1];
+            activeBuldingType = buildingTypeList.list[1];
         }
     }
 
@@ -67,5 +70,10 @@ public class BuildingManager : MonoBehaviour
 
       //  Debug.Log(mouseWorldPosition); //for testing
         return mouseWorldPosition;
+    }
+
+    public void SetActiveBuildingType(BuldingTypeSO buldingType)
+    {
+        activeBuldingType = buldingType;
     }
 }

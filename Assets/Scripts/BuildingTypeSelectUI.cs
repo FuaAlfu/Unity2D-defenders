@@ -26,7 +26,9 @@ public class BuildingTypeSelectUI : MonoBehaviour
             float offsetAmount = +160f; //going right
             btnTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
             btnTransform.Find("image").GetComponent<Image>().sprite = buildingType.sprite;
-
+            btnTransform.GetComponent<Button>().onClick.AddListener(() => {
+                BuildingManager.Instance.SetActiveBuildingType(buildingType);
+            });
             index++;
         }
     }
