@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
 public class BuildingTypeSelectUI : MonoBehaviour
 {
-
+    [SerializeField] private Sprite arrowSprite;
+    //for selected btn
+    private Dictionary<BuldingTypeSO, Transform> btnTransformDictionary;
+    private Transform arrowBtn;
     private void Awake()
     {
        Transform btnTemplate = transform.Find("btnTemplate");
@@ -17,31 +20,60 @@ public class BuildingTypeSelectUI : MonoBehaviour
 
         BuildingTypeListSO buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
 
+        btnTransformDictionary = new Dictionary<BuldingTypeSO, Transform>();
         int index = 0;
-        foreach(BuldingTypeSO buildingType in buildingTypeList.list)
+
+        //--   [mouse cursor]
+        Transform arrowBtn = Instantiate(btnTemplate, transform);
+        arrowBtn.gameObject.SetActive(true);
+
+        float offsetAmount = +130f; //going right
+        arrowBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
+        arrowBtn.Find("image").GetComponent<Image>().sprite = arrowSprite;
+        arrowBtn.GetComponent<Button>().onClick.AddListener(() => {
+            BuildingManager.Instance.SetActiveBuildingType(null);
+        });
+
+        index++;
+
+        //--
+        foreach (BuldingTypeSO buildingType in buildingTypeList.list)
         {
            Transform btnTransform = Instantiate(btnTemplate, transform);
             btnTransform.gameObject.SetActive(true);
 
-            float offsetAmount = +160f; //going right
+            offsetAmount = +130f; //going right
             btnTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
             btnTransform.Find("image").GetComponent<Image>().sprite = buildingType.sprite;
             btnTransform.GetComponent<Button>().onClick.AddListener(() => {
                 BuildingManager.Instance.SetActiveBuildingType(buildingType);
             });
+
+            btnTransformDictionary[buildingType] = btnTransform;
             index++;
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
+        UpdateActiveBuildingTypeButton();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void UpdateActiveBuildingTypeButton()
     {
-        
+        arrowBtn.Find("selected").gameObject.SetActive(false);
+        foreach (BuldingTypeSO buldingType in btnTransformDictionary.Keys)
+        {
+            Transform btnTransform = btnTransformDictionary[buldingType];
+            btnTransform.Find("selected").gameObject.SetActive(false);
+        }
+       BuldingTypeSO activeBuildingType = BuildingManager.Instance.GetActiveBuildingType();
+        if (activeBuildingType == null)
+        {
+            arrowBtn.Find("selected").gameObject.SetActive(true);
+        }
+        else
+        {
+            btnTransformDictionary[activeBuildingType].Find("selected").gameObject.SetActive(true);
+        }
     }
 }

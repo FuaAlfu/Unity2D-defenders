@@ -30,7 +30,8 @@ public class BuildingManager : MonoBehaviour
         // Debug.Log(Resources.Load<BuildingTypeListSO>("BuildingTypeList")); //add debug for testing
         Instance = this;
         buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name); //another way to write it :: must mach with the name of file
-        activeBuldingType = buildingTypeList.list[0];
+        //activeBuldingType = buildingTypeList.list[0];
+
     }
 
     // Start is called before the first frame update
@@ -49,18 +50,21 @@ public class BuildingManager : MonoBehaviour
        // mouseVisualTransform.position = GetMouseWorldPos(); //for testing
        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) //0:left, 1:right, 2:meddile
         {
-            Instantiate(activeBuldingType.prefabe, GetMouseWorldPos(),Quaternion.identity);
+            if (activeBuldingType != null)
+            {
+                Instantiate(activeBuldingType.prefabe, GetMouseWorldPos(), Quaternion.identity);
+            }
         }
         //for testing
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            activeBuldingType = buildingTypeList.list[0];
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            activeBuldingType = buildingTypeList.list[1];
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    activeBuldingType = buildingTypeList.list[0];
+        //}
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    activeBuldingType = buildingTypeList.list[1];
+        //}
     }
 
     private Vector3 GetMouseWorldPos()
@@ -75,5 +79,10 @@ public class BuildingManager : MonoBehaviour
     public void SetActiveBuildingType(BuldingTypeSO buldingType)
     {
         activeBuldingType = buldingType;
+    }
+
+    public BuldingTypeSO GetActiveBuildingType()
+    {
+        return activeBuldingType;
     }
 }
