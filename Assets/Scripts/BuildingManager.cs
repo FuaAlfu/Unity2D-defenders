@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,6 +21,8 @@ public class BuildingManager : MonoBehaviour
     public static BuildingManager Instance { get; private set; }
     private BuldingTypeSO activeBuldingType;
     private BuildingTypeListSO buildingTypeList;
+
+    public event EventHandler OnActiveBuildingTypeChanged;
 
     //catch
     private Camera mainCamera;
@@ -52,7 +55,7 @@ public class BuildingManager : MonoBehaviour
         {
             if (activeBuldingType != null)
             {
-                Instantiate(activeBuldingType.prefabe, GetMouseWorldPos(), Quaternion.identity);
+                Instantiate(activeBuldingType.prefabe, UtilsClass.GetMouseWorldPos(), Quaternion.identity);
             }
         }
         //for testing
@@ -67,18 +70,20 @@ public class BuildingManager : MonoBehaviour
         //}
     }
 
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0f;
+    //old but gold
+    //private Vector3 GetMouseWorldPos()
+    //{
+    //    Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+    //    mouseWorldPosition.z = 0f;
 
-      //  Debug.Log(mouseWorldPosition); //for testing
-        return mouseWorldPosition;
-    }
+    //  //  Debug.Log(mouseWorldPosition); //for testing
+    //    return mouseWorldPosition;
+    //}
 
     public void SetActiveBuildingType(BuldingTypeSO buldingType)
     {
         activeBuldingType = buldingType;
+        OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public BuldingTypeSO GetActiveBuildingType()

@@ -24,17 +24,17 @@ public class BuildingTypeSelectUI : MonoBehaviour
         int index = 0;
 
         //--   [mouse cursor]
-        Transform arrowBtn = Instantiate(btnTemplate, transform);
-        arrowBtn.gameObject.SetActive(true);
+        //Transform arrowBtn = Instantiate(btnTemplate, transform);
+        //arrowBtn.gameObject.SetActive(true);
 
-        float offsetAmount = +130f; //going right
-        arrowBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
-        arrowBtn.Find("image").GetComponent<Image>().sprite = arrowSprite;
-        arrowBtn.GetComponent<Button>().onClick.AddListener(() => {
-            BuildingManager.Instance.SetActiveBuildingType(null);
-        });
+        //float offsetAmount = +130f; //going right
+        //arrowBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
+        //arrowBtn.Find("image").GetComponent<Image>().sprite = arrowSprite;
+        //arrowBtn.GetComponent<Button>().onClick.AddListener(() => {
+        //    BuildingManager.Instance.SetActiveBuildingType(null);
+        //});
 
-        index++;
+        //index++;
 
         //--
         foreach (BuldingTypeSO buildingType in buildingTypeList.list)
@@ -42,7 +42,7 @@ public class BuildingTypeSelectUI : MonoBehaviour
            Transform btnTransform = Instantiate(btnTemplate, transform);
             btnTransform.gameObject.SetActive(true);
 
-            offsetAmount = +130f; //going right
+            float offsetAmount = +130f; //going right :: remove float
             btnTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0); //x & y
             btnTransform.Find("image").GetComponent<Image>().sprite = buildingType.sprite;
             btnTransform.GetComponent<Button>().onClick.AddListener(() => {
@@ -60,7 +60,7 @@ public class BuildingTypeSelectUI : MonoBehaviour
     }
     private void UpdateActiveBuildingTypeButton()
     {
-        arrowBtn.Find("selected").gameObject.SetActive(false);
+        //arrowBtn.Find("selected").gameObject.SetActive(false);
         foreach (BuldingTypeSO buldingType in btnTransformDictionary.Keys)
         {
             Transform btnTransform = btnTransformDictionary[buldingType];
