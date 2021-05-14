@@ -19,10 +19,15 @@ public class BuildingManager : MonoBehaviour
     //private BuldingTypeSO activeBuldingType; //we could use list told multiable types  private <BuldingTypeSO> activeBuldingType;
     //---------------------------------------------------------------------------------------------------------------
     public static BuildingManager Instance { get; private set; }
+
+    public event EventHandler<OnActiveBuildingTypeChangedEventArgs> OnActiveBuildingTypeChanged;
+    public class OnActiveBuildingTypeChangedEventArgs : EventArgs
+    {
+        public BuldingTypeSO activeBuldingType;
+    }
+
     private BuldingTypeSO activeBuldingType;
     private BuildingTypeListSO buildingTypeList;
-
-    public event EventHandler OnActiveBuildingTypeChanged;
 
     //catch
     private Camera mainCamera;
@@ -83,7 +88,7 @@ public class BuildingManager : MonoBehaviour
     public void SetActiveBuildingType(BuldingTypeSO buldingType)
     {
         activeBuldingType = buldingType;
-        OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
+        OnActiveBuildingTypeChanged?.Invoke(this, new OnActiveBuildingTypeChangedEventArgs { activeBuldingType = activeBuldingType });
     }
 
     public BuldingTypeSO GetActiveBuildingType()

@@ -22,10 +22,18 @@ public class BuildingGhost : MonoBehaviour
         BuildingManager.Instance.OnActiveBuildingTypeChanged += BuildingManager_OnActiveBuildingTypeChanged;
     }
 
-    private void BuildingManager_OnActiveBuildingTypeChanged(object sender, System.EventArgs e)
+    private void BuildingManager_OnActiveBuildingTypeChanged(object sender, BuildingManager.OnActiveBuildingTypeChangedEventArgs e)
     {
-       BuldingTypeSO buildingTypeSO = BuildingManager.Instance.GetActiveBuildingType();
+        //BuldingTypeSO buildingTypeSO = BuildingManager.Instance.GetActiveBuildingType(); //old but gold
         //todo..
+        if(e.activeBuldingType == null)
+        {
+            Hide();
+        }
+        else
+        {
+            Show(e.activeBuldingType.sprite);
+        }
     }
 
     private void Update()

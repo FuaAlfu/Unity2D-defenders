@@ -54,13 +54,24 @@ public class BuildingTypeSelectUI : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
+    {
+        BuildingManager.Instance.OnActiveBuildingTypeChanged += BuildingManager_OnActiveBuildingTypeChanged;
+        UpdateActiveBuildingTypeButton();
+    }
+
+    private void BuildingManager_OnActiveBuildingTypeChanged(object sender, BuildingManager.OnActiveBuildingTypeChangedEventArgs e)
     {
         UpdateActiveBuildingTypeButton();
     }
+
+    //private void Update()
+    //{
+    //    UpdateActiveBuildingTypeButton();
+    //}
     private void UpdateActiveBuildingTypeButton()
     {
-        //arrowBtn.Find("selected").gameObject.SetActive(false);
+       // arrowBtn.Find("selected").gameObject.SetActive(false);
         foreach (BuldingTypeSO buldingType in btnTransformDictionary.Keys)
         {
             Transform btnTransform = btnTransformDictionary[buldingType];
