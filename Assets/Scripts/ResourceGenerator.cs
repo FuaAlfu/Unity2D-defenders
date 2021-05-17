@@ -26,7 +26,15 @@ public class ResourceGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(transform.position, 5f);
+        foreach(Collider2D collider2D in collider2DArray)
+        {
+           ResourceNode resourceNode = collider2D.GetComponent<ResourceNode>();
+            if(resourceNode != null)
+            {
+                //todo
+            }
+        }
     }
 
     // Update is called once per frame

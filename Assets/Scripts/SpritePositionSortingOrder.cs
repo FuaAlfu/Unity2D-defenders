@@ -9,6 +9,8 @@ using UnityEngine;
 public class SpritePositionSortingOrder : MonoBehaviour
 {
     [SerializeField] private bool runOnce;
+    [SerializeField] private float positionOffsetY;
+
     private SpriteRenderer spriteRenderer;
     private void Awake()
     {
@@ -18,7 +20,7 @@ public class SpritePositionSortingOrder : MonoBehaviour
     private void LateUpdate()
     {
         float precisionMultiplier = 5f;
-       spriteRenderer.sortingOrder = (int)(-transform.position.y * precisionMultiplier);
+       spriteRenderer.sortingOrder = (int)(-(transform.position.y + positionOffsetY) * precisionMultiplier);
 
         if(runOnce)
         {
