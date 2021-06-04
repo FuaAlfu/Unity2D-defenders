@@ -105,7 +105,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5877761172366299447}
-  - component: {fileID: 5954234573605013745}
   m_Layer: 0
   m_Name: pfTreeVisual
   m_TagString: Untagged
@@ -132,22 +131,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5954234573605013745
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766746179961913856}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.026673943, y: -0.2}
-  serializedVersion: 2
-  m_Radius: 0.33425558
 --- !u!1 &4724870052136919265
 GameObject:
   m_ObjectHideFlags: 0

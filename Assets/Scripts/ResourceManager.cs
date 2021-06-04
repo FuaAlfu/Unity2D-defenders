@@ -44,7 +44,7 @@ public class ResourceManager : MonoBehaviour
             resourceAmountDictionary[resourceType] = 0;
             
         }
-        TestLogResourceAmountDictionary();
+       // TestLogResourceAmountDictionary();
     }
 
     //for testing
@@ -54,7 +54,7 @@ public class ResourceManager : MonoBehaviour
         {
             ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
             AddResource(resourceTypeList.list[0], 2);
-            TestLogResourceAmountDictionary();
+           // TestLogResourceAmountDictionary();
         }
     }
 
@@ -78,7 +78,7 @@ public class ResourceManager : MonoBehaviour
         }
          */
         OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);  //event handeler signature :: take obj center and an opitinal arg, we use EventArgs.Empty becuase we not want to send any extra info..
-        TestLogResourceAmountDictionary();
+        //TestLogResourceAmountDictionary();
     }
 
     public int GetResourceAmount(ResourceTypeSO resourceType)
