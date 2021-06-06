@@ -38,7 +38,11 @@ public class ResourceGenerator : MonoBehaviour
             if(resourceNode != null)
             {
                 //todo   :: it's a resource node
-                nearbyResourceAmount++;
+                if(resourceNode.resourceType == resourceGeneratorData.resourceType)
+                {
+                    //same type and if its so, then increase it..
+                    nearbyResourceAmount++;
+                }
             }
         }
         //clamb our values
@@ -48,7 +52,11 @@ public class ResourceGenerator : MonoBehaviour
             //no resource nodes nearby :: disable the script (disable resource generator)
             enabled = false;
         }
-        print("nearbyResourceAmount: " + nearbyResourceAmount);
+        else
+        {
+            timerMax = (resourceGeneratorData.timerMax / 2f) + resourceGeneratorData.timerMax * (1 - (float)nearbyResourceAmount / resourceGeneratorData.maxResourceAmount);
+        }
+        print("nearbyResourceAmount: " + nearbyResourceAmount + "; timerMax: " + timerMax);
     }
 
     // Update is called once per frame
